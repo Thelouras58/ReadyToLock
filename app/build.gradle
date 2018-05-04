@@ -27,6 +27,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     //my libs
-    compile 'io.paperdb:paperdb:2.0'
-    compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+
+    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
 }
