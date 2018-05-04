@@ -16,5 +16,11 @@ public class User {
         ReadWriteUtils.makeDir(username);
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public int getId() {
+        return id;
+    }
 }

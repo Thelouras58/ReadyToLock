@@ -13,14 +13,16 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private EditText textBox;
-    private User user;
+    private static User user;
+
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textBox = (EditText) findViewById(R.id.textBox);
-        Log.e("username:",this.textBox.getText().toString());
+        Log.e("username:", this.textBox.getText().toString());
     }
 
 
@@ -32,9 +34,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
         }
-        Log.e("username",this.textBox.getText().toString());
+        Log.e("username", this.textBox.getText().toString());
         user = new User(this.textBox.getText().toString());
         startActivity(c);
+    }
+
+    public static User getUser() {
+        return user;
     }
 
     public void box(View view) {
