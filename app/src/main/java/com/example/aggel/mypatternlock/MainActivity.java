@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.aggel.mypatternlock.pattern.PatternView;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText textBox;
+    private EditText textBox, textBox2, textBox3;
     private static User user;
+
 
 
     @Override
@@ -22,21 +24,29 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textBox = (EditText) findViewById(R.id.textBox);
-        Log.e("username:", this.textBox.getText().toString());
+        textBox2 = (EditText) findViewById(R.id.textBox2);
+        textBox3 = (EditText) findViewById(R.id.textBox3);
+
     }
 
 
     public void startApp(View view) throws IOException {
         Intent c = new Intent(this, PatternView.class);
+        Intent c2 = new Intent(this, MainActivity.class);
 
-        if (!this.textBox.getText().toString().equals("username")) {
-            //toast pleas enter username
+        if (this.textBox.getText().toString().equals("username") || this.textBox3.getText().toString().equals("finger") || this.textBox2.getText().toString().equals("hand")) {
+
+            Toast.makeText(this, "Please fill the textboxes", Toast.LENGTH_SHORT).show();
+
         } else {
 
+            Log.e("username", this.textBox.getText().toString());
+
+                user = new User(this.textBox.getText().toString(), Integer.parseInt(this.textBox2.getText().toString()), Integer.parseInt(this.textBox3.getText().toString()));
+
+            startActivity(c);
         }
-        Log.e("username", this.textBox.getText().toString());
-        user = new User(this.textBox.getText().toString());
-        startActivity(c);
+
     }
 
     public static User getUser() {
@@ -44,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void box(View view) {
-        this.textBox.setText(" ");
+        this.textBox.setText("");
+    }
+
+    public void box3(View view) {
+        this.textBox3.setText("");
+    }
+
+    public void box2(View view) {
+        this.textBox2.setText("");
     }
 }

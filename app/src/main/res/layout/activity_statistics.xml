@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".statistics.StatisticsActivity">
 
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="576dp"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create MetaData"
+            android:onClick="createMetadata"/>
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Statistics"
+            android:onClick="statisticalAnalysis"/>
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="show my results"
+            android:onClick="show"
+            />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

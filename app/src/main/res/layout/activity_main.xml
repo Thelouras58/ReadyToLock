@@ -20,9 +20,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:onClick="box"
             android:inputType="textPersonName"
+            android:onClick="box"
             android:text="username" />
+
+        <EditText
+            android:id="@+id/textBox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:onClick="box2"
+            android:text="hand" />
+
+        <EditText
+            android:id="@+id/textBox3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:onClick="box3"
+            android:text="finger " />
 
         <Button
             android:id="@+id/start"

@@ -19,7 +19,7 @@
         android:background="#333639"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        
+
         <com.andrognito.patternlockview.PatternLockView
             android:id="@+id/pattern_lock_view"
             android:layout_width="match_parent"
@@ -31,4 +31,17 @@
         android:layout_height="wrap_content"
         android:text="Submit Pattern"
         android:id="@+id/btnSetPattern"/>
+
+    <Button
+        android:id="@+id/checkButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Pattern"
+        android:onClick="box3"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Can you remember 3 of your patterns" />
 </LinearLayout>

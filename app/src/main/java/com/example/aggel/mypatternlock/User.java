@@ -7,12 +7,15 @@ import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import java.io.IOException;
 
 public class User {
-    String username;
-    int id;
+    private String username;
 
-    public User(String username) throws IOException {
+    private int hand, finger;
+
+
+    public User(String username, int hand, int finger) throws IOException {
         this.username = username;
-        id = 1;
+        this.finger = finger;
+        this.hand = hand;
         ReadWriteUtils.makeDir(username);
     }
 
@@ -20,7 +23,24 @@ public class User {
         return username;
     }
 
-    public int getId() {
-        return id;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getHand() {
+        return hand;
+    }
+
+    public void setHand(int hand) {
+        this.hand = hand;
+    }
+
+    public int getFinger() {
+        return finger;
+    }
+
+    public void setFinger(int finger) {
+        this.finger = finger;
     }
 }
