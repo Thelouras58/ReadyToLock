@@ -1,7 +1,7 @@
 package com.example.aggel.mypatternlock.pattern;
 
 public class Point {
-    int x,y;
+    int x, y;
 
     public int getX() {
         return x;
@@ -11,9 +11,8 @@ public class Point {
         return y;
     }
 
-    public Point(int x, int y)
-    {
-        this.x=x;
-        this.y=y;
+    public Point(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 }

@@ -14,6 +14,7 @@ import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//κλάση που έχουμε τις λειτουργίες με τους σένσορες
 public class SensorsUtils implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor sensor1, sensor2, sensor3;
@@ -22,10 +23,12 @@ public class SensorsUtils implements SensorEventListener {
     public SensorsUtils() {
     }
 
+
     public SensorsUtils(Activity activity) {
+    //init
         mSensorManager = (SensorManager) activity.getSystemService(Activity.SENSOR_SERVICE);
         sensor1 = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);//to kinito den exei gyroscope  xrisimopoioume to rotation vector kai metatrepoume ta apotelesmata tou se azimuth ,roll,pitch
         sensor3 = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         sen1 = new ArrayList();
         sen2 = new ArrayList();
@@ -45,6 +48,7 @@ public class SensorsUtils implements SensorEventListener {
 
     public void stopListen(int turn) throws IOException {
         mSensorManager.unregisterListener(this);
+        //με το που σταματάμε σημαίνει ότι τελείωσε ο γύρος άρα τα γράφουμε στο csv
         ReadWriteUtils.writeCSV(turn, sen1,sen0, sen2, time1);
 
 
@@ -75,6 +79,7 @@ public class SensorsUtils implements SensorEventListener {
 
     }
 
+    //metatropi ton apotelesmatwn tou rotation vector se azimuth/pitch/roll opws tha epestrefe to gyroscope
     public void updateOrientation(float[] rotationVector) {
         float[] rotationMatrix = new float[9];
         SensorManager.getRotationMatrixFromVector(rotationMatrix, rotationVector);

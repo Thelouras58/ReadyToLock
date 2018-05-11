@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import com.example.aggel.mypatternlock.pattern.PatternView;
+import com.example.aggel.mypatternlock.statistics.StatisticsActivity;
 
 import java.io.IOException;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //onClick του κουμπιου
     public void startApp(View view) throws IOException {
         Intent c = new Intent(this, PatternView.class);
         Intent c2 = new Intent(this, MainActivity.class);
@@ -63,5 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void box2(View view) {
         this.textBox2.setText("");
+    }
+
+    public void test(View view) throws IOException {
+        //ReadWriteUtils.writeMetaData();
+        Log.e("checktest", StatisticsActivity.longOrthEdge("0125876")+"");
     }
 }

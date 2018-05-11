@@ -5,7 +5,7 @@ import android.util.Log;
 import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 
 import java.io.IOException;
-
+//κλάση που αναπαραστά τον χρήστη
 public class User {
     private String username;
 
