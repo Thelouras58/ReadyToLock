@@ -36,8 +36,8 @@
         android:id="@+id/checkButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit Pattern"
-        android:onClick="box3"/>
+        android:onClick="box3"
+        android:text="Check Pattern" />
 
     <TextView
         android:id="@+id/text"

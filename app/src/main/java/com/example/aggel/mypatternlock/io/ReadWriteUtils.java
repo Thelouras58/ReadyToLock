@@ -33,6 +33,8 @@ import java.util.List;
 public class ReadWriteUtils {
 
     private static File dir, file;
+    private static Float maxPresOver, minPresOver;
+    private static ArrayList<Float> avgSpeedOver;
 
     public static void makeDir(String username) throws IOException {
         //δημιουργία του πρωσοπικού φακέλου του χρήστη
@@ -46,8 +48,8 @@ public class ReadWriteUtils {
 
         final String filename = dir.toString() + "/" + MainActivity.getUser().getUsername() + "_" + turn + "_raw.csv";
         FileWriter fw = new FileWriter(filename, true);
-        //  fw.write("number_of_activated_point;xpoint;ypoint;timestamp;pressure");
-        fw.write("\n");
+        // fw.write("number_of_activated_point;xpoint;ypoint;timestamp;pressure");
+        // fw.write("\n");
         for (int i = 0; i < data.size(); i++) {
             Log.e("DEBUGYO", String.valueOf(data4.get(i)));
             fw.write(data4.get(i).toString());
@@ -69,7 +71,7 @@ public class ReadWriteUtils {
         final String filename = dir.toString() + "/" + MainActivity.getUser().getUsername() + "_" + turn + "_sensors.csv";
         FileWriter fw = new FileWriter(filename, true);
         // fw.write("timestamp;accel_x;accel_y;accel_z;gyro_x;gyro_y;gyro_z;laccel_x;laccel_y;laccel_z");
-        fw.write("\n");
+        //  fw.write("\n");
         for (int i = 0; i < data2.size(); i++) {
 
             fw.write(data3.get(i));
@@ -93,10 +95,11 @@ public class ReadWriteUtils {
         ArrayList<Float> pressures = new ArrayList<>();
         ArrayList<Float> times = new ArrayList<>();
         ArrayList<Point> points = new ArrayList<>();
-
-        // fw.write("Username; Attempt_number; Sequence; Seq_length; Time_to_complete; PatternLength; Avg_speed; Avg_pressure; Highest_pressure; Lowest_pressure; HandNum; FingerNum");
-        // fw.write("\n");
-
+        avgSpeedOver = new ArrayList<>();
+        //fw.write("Username; Attempt_number; Sequence; Seq_length; Time_to_complete; PatternLength; Avg_speed; Avg_pressure; Highest_pressure; Lowest_pressure; HandNum; FingerNum");
+        //  fw.write("\n");
+        maxPresOver = Float.valueOf(-1);
+        minPresOver = Float.valueOf(10);
         File raw;
 
         BufferedReader br;
@@ -123,7 +126,16 @@ public class ReadWriteUtils {
             Float avgSpeed = length / timeToComplete;
             Float maxPres = Collections.max(pressures);
             Float minPres = Collections.min(pressures);
-            Log.d("METADATA1", MainActivity.getUser().getHand() + "+" + MainActivity.getUser().getFinger());
+
+            if (PatternUtils.max(maxPres, maxPresOver)) {
+                Log.e("MAXMAX", maxPresOver + "");
+                maxPresOver = maxPres;
+            }
+            if (PatternUtils.min(minPres, minPresOver)) {
+                minPresOver = minPres;
+            }
+            avgSpeedOver.add(avgSpeed);
+
             fw.write(MainActivity.getUser().getUsername());
             fw.write(";");
             fw.write(String.valueOf(i));
@@ -144,9 +156,9 @@ public class ReadWriteUtils {
             fw.write(";");
             fw.write(minPres.toString());
             fw.write(";");
-            fw.write(MainActivity.getUser().getHand()+"");
+            fw.write(MainActivity.getUser().getHand() + "");
             fw.write(";");
-            fw.write(MainActivity.getUser().getFinger()+"");
+            fw.write(MainActivity.getUser().getFinger() + "");
             fw.write("\n");
 
 
@@ -184,7 +196,8 @@ public class ReadWriteUtils {
             raw = new File(Environment.getExternalStorageDirectory() + "/users/" + MainActivity.getUser().getUsername(), MainActivity.getUser().getUsername() + "_" + i + "_raw.csv");
             Log.e("METADATA", pat.get(i));
             Log.e("METADATA", pat.get(i).charAt(0) + "");
-
+            // fw.write("Username;Attempt_number;Screen_Resolution;Pattern_number_A; Pattern_number_B; Xcoord_of_central_Point_of_A; Ycoord_of_central_Point_of_A;Xcoord_of_central_Point_of_B;Ycoord_of_central_Point_of_B;First_Xcoord_of_A; First_Ycoord_of_A;Last_ Xcoord_of_B;Last_Ycoord_of_B;Distance_AB;Intertime_AB;Avg_speeadAB;Avg_pressure");
+            //  fw.write("\n");
             for (int j = 1; j < pat.get(i).length(); j++) {
 
                 A = Character.getNumericValue(pat.get(i).charAt(j - 1));
@@ -239,5 +252,18 @@ public class ReadWriteUtils {
         }
 
     }
+
+    public static Float getMaxPresOver() {
+        return maxPresOver;
+    }
+
+    public static Float getMinPresOver() {
+        return minPresOver;
+    }
+
+    public static ArrayList<Float> getAvgSpeedOver() {
+        return avgSpeedOver;
+    }
+
 
 }

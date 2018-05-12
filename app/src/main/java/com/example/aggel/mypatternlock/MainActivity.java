@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private static User user;
 
 
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
             Log.e("username", this.textBox.getText().toString());
 
-                user = new User(this.textBox.getText().toString(), Integer.parseInt(this.textBox2.getText().toString()), Integer.parseInt(this.textBox3.getText().toString()));
+            user = new User(this.textBox.getText().toString(), Integer.parseInt(this.textBox2.getText().toString()), Integer.parseInt(this.textBox3.getText().toString()));
 
             startActivity(c);
         }
@@ -67,8 +66,5 @@ public class MainActivity extends AppCompatActivity {
         this.textBox2.setText("");
     }
 
-    public void test(View view) throws IOException {
-        //ReadWriteUtils.writeMetaData();
-        Log.e("checktest", StatisticsActivity.longOrthEdge("0125876")+"");
-    }
+
 }

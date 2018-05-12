@@ -31,7 +31,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:onClick="box2"
-            android:text="hand" />
+            android:text="hand (1 for the Left)and(2 for the Right)" />
 
         <EditText
             android:id="@+id/textBox3"
@@ -40,7 +40,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:onClick="box3"
-            android:text="finger " />
+            android:text="finger (1 for the Thump)until(5for the Pinky)" />
 
         <Button
             android:id="@+id/start"
@@ -49,12 +49,7 @@
             android:onClick="startApp"
             android:text="Let's Start !!" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test"
-            android:onClick="test"/>
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

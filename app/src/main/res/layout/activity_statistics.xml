@@ -36,6 +36,12 @@
             android:text="show my results"
             android:onClick="show"
             />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="273dp" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
