@@ -55,7 +55,7 @@ public class StatisticsActivity extends AppCompatActivity {
     public void show(View view) {
         results.setText("LongRuns: " + longRuns + "\nClosedCurves: " + closedCurves + "\nLongCurves: " + longCurves + "\nLongEdes: " + longEdges + "\nShortEdges: " + shortEdges + "\nLongOrthEdges: " + longOrthEdges + "\nShortOrthEdges: " + shortOrthEdges + "\n----------------------------------------\n");
 
-        results.append("MaxPressure: " + ReadWriteUtils.getMaxPresOver() + "\nMinPressure: " + ReadWriteUtils.getMinPresOver() + "\nAverage Speed: " + PatternUtils.avg(ReadWriteUtils.getAvgSpeedOver())+" nanoseconds");
+       // results.append("MaxPressure: " + ReadWriteUtils.getMaxPresOver() + "\nMinPressure: " + ReadWriteUtils.getMinPresOver() + "\nAverage Speed: " + PatternUtils.avg(ReadWriteUtils.getAvgSpeedOver())+" nanoseconds");
         results.setVisibility(View.VISIBLE);
     }
 

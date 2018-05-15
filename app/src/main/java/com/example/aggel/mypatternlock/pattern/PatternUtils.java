@@ -56,7 +56,7 @@ public class PatternUtils {
 
     }
 
-    //
+
     public static Float avg(ArrayList<Float> list) {
         float sum = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -67,17 +67,17 @@ public class PatternUtils {
 
     public static float calculatePatternLength(ArrayList<Point> list) {
         ArrayList<Point> temp = new ArrayList<>();
-        float distance=0,count=0;    //gia na paroume to 60% twn simeiwn pou apexoun ises apostaseis
-        count=list.size()*60/100;    //arkei na broume to poso tha prepei na apexoun ta simeia metaksy tous to opoio einai size/size*60%
-        float a = list.size()/count;
-        Log.e("check","d=60/size = "+a );
-        for (float i = 0; i < (float) list.size()-a; i+=a) {
-            distance+=Math.sqrt(Math.pow(list.get((int) i).getX()-list.get((int) (i+a)).getX(),2)+Math.pow(list.get((int) i).getY()-list.get((int) (i+a)).getY(),2));
+        float distance = 0, count = 0;    //gia na paroume to 60% twn simeiwn pou apexoun ises apostaseis
+        count = list.size() * 60 / 100;    //arkei na broume to poso tha prepei na apexoun ta simeia metaksy tous to opoio einai size/size*60%
+        float a = list.size() / count;
+        Log.e("check", "d=60/size = " + a);
+        for (float i = 0; i < (float) list.size() - a; i += a) {
+            distance += Math.sqrt(Math.pow(list.get((int) i).getX() - list.get((int) (i + a)).getX(), 2) + Math.pow(list.get((int) i).getY() - list.get((int) (i + a)).getY(), 2));
         }
-        return  distance;
+        return distance;
     }
 
-    public static  Point centralPointOf(Integer x) {
+    public static Point centralPointOf(Integer x) {
         if (x.equals(0)) {
             return new Point(190, 150);
         } else if (x.equals(1)) {

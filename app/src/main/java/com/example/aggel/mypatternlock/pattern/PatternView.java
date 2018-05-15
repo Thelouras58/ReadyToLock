@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.example.aggel.mypatternlock.MainActivity;
 import com.example.aggel.mypatternlock.R;
 import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import com.example.aggel.mypatternlock.sensors.SensorsUtils;
@@ -68,8 +69,14 @@ public class PatternView extends AppCompatActivity {
         cont = getApplicationContext();
         //δημιουργούμε αντικείμενο της κλάσης μας που ''ακούνε΄΄ οι σένσορες
         s = new SensorsUtils(this);
+        //ξεκίνημα διαδικασίας
+        setListeners();
 
+    }
+
+    public void setListeners() {
         //ο custom listener του patternLockView που χρησιμοποιήσαμε
+        //το capture ξεκινάει σε αυτά τα listeners και όχι στα ACTION_DOWN ACTION_UP
         patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
             public void onStarted() {
@@ -107,6 +114,7 @@ public class PatternView extends AppCompatActivity {
                 Log.d(getClass().getName(), "Pattern has been cleared");
             }
         });
+
         //listener στο κουμπί που πατάει για να καταχωρίσει το pattern
         btnSetup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,11 +137,7 @@ public class PatternView extends AppCompatActivity {
                         }
                         //reinit για τον επόμενο γύρο
                         turn++;
-                        patternLockView.clearPattern();
-                        listTimestamps.clear();
-                        listPressures.clear();
-                        listPoints.clear();
-                        listPointsActivator.clear();
+                        clearList();
                         //άμα είναι γύρο επιβεβαιωσης αλλάζουμε το κουμπί για να αλλάξει και η λειτουργία
                         if ((turn == 10) || (turn == 22)) {
                             btnSetup.setVisibility(View.INVISIBLE);
@@ -215,7 +219,7 @@ public class PatternView extends AppCompatActivity {
                 counter++;
             }
             if (counter == 2) {
-
+                counter = 1;
                 return false;
 
             }
@@ -270,7 +274,7 @@ public class PatternView extends AppCompatActivity {
     }
 
     //η onClick του κουμπιού όταν βάζει τα τρία pattern επιβαιβέωσης
-    public void box3(View view) {
+    public void box3(View view) throws IOException {
 
         if (!check3(final_pattern)) {
 
@@ -282,11 +286,7 @@ public class PatternView extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            patternLockView.clearPattern();
-            listTimestamps.clear();
-            listPressures.clear();
-            listPoints.clear();
-            listPointsActivator.clear();
+            clearList();
             turn++;
 
             //άμα τελείωσε πάμε για την δευτερη  10αδα
@@ -295,11 +295,8 @@ public class PatternView extends AppCompatActivity {
                 mButton.setVisibility(View.INVISIBLE);
                 text.setVisibility(View.INVISIBLE);
                 text.setVisibility(View.INVISIBLE);
-                patternLockView.clearPattern();
-                listTimestamps.clear();
-                listPressures.clear();
-                listPoints.clear();
-                listPointsActivator.clear();
+                clearList();
+
                 counter = 0;
             } else if (turn == 25) {// αμα τελειώσε τελείος πάμε να υπολογίζουμε τα στατιστικά και τα metadata
                 Intent c = new Intent(this, StatisticsActivity.class);
@@ -308,6 +305,7 @@ public class PatternView extends AppCompatActivity {
             }
         } else {
             Toast.makeText(PatternView.this, "Better luck next time.Start Over!!", Toast.LENGTH_SHORT).show();
+            resetRound();
         }
 
 
@@ -319,6 +317,21 @@ public class PatternView extends AppCompatActivity {
 
     public static Context getCont() {
         return cont;
+    }
+
+    public void clearList() {
+        patternLockView.clearPattern();
+        listTimestamps.clear();
+        listPressures.clear();
+        listPoints.clear();
+        listPointsActivator.clear();
+    }
+
+    public void resetRound() throws IOException {
+        ReadWriteUtils.deleteDir();
+        ReadWriteUtils.makeDir(MainActivity.getUser().getUsername());
+        Intent c2 = new Intent(this, PatternView.class);
+        startActivity(c2);
     }
 
 }

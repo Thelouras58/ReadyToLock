@@ -43,6 +43,7 @@ public class ReadWriteUtils {
 
     }
 
+
     //create Raw pattern file
     public static void writeCSV(ArrayList<String> data, ArrayList<String> data2, ArrayList<String> data3, ArrayList<Integer> data4, int turn) throws IOException {
 
@@ -51,9 +52,9 @@ public class ReadWriteUtils {
         // fw.write("number_of_activated_point;xpoint;ypoint;timestamp;pressure");
         // fw.write("\n");
         for (int i = 0; i < data.size(); i++) {
-            Log.e("DEBUGYO", String.valueOf(data4.get(i)));
+            // Log.e("DEBUGYO", String.valueOf(data4.get(i)));
             fw.write(data4.get(i).toString());
-            Log.e("DEBUGYO", String.valueOf(data4.size() + "_" + data.size()));
+            // Log.e("DEBUGYO", String.valueOf(data4.size() + "_" + data.size()));
             fw.write(";");
             fw.write(data3.get(i));
             fw.write(";");
@@ -107,6 +108,8 @@ public class ReadWriteUtils {
             raw = new File(Environment.getExternalStorageDirectory() + "/users/" + MainActivity.getUser().getUsername(), MainActivity.getUser().getUsername() + "_" + i + "_raw.csv");
             br = new BufferedReader(new FileReader(raw));
 
+
+            //διάβασμα raw file για να πάρουμε τα δεδομένα που χρηαζόμαστε
             String line = br.readLine();
             while (line != null) {
                 String[] myStrings = line.split("\\;");
@@ -119,7 +122,8 @@ public class ReadWriteUtils {
 
                 line = br.readLine();
             }
-            Log.e("check", "points list length =" + points.size());
+
+            // Log.e("check", "points list length =" + points.size());
             Float timeToComplete = times.get(times.size() - 1) - times.get(0);
             Float length = PatternUtils.calculatePatternLength(points);
             Float avgPres = PatternUtils.avg(pressures);
@@ -128,7 +132,7 @@ public class ReadWriteUtils {
             Float minPres = Collections.min(pressures);
 
             if (PatternUtils.max(maxPres, maxPresOver)) {
-                Log.e("MAXMAX", maxPresOver + "");
+               // Log.e("MAXMAX", maxPresOver + "");
                 maxPresOver = maxPres;
             }
             if (PatternUtils.min(minPres, minPresOver)) {
@@ -198,6 +202,7 @@ public class ReadWriteUtils {
             Log.e("METADATA", pat.get(i).charAt(0) + "");
             // fw.write("Username;Attempt_number;Screen_Resolution;Pattern_number_A; Pattern_number_B; Xcoord_of_central_Point_of_A; Ycoord_of_central_Point_of_A;Xcoord_of_central_Point_of_B;Ycoord_of_central_Point_of_B;First_Xcoord_of_A; First_Ycoord_of_A;Last_ Xcoord_of_B;Last_Ycoord_of_B;Distance_AB;Intertime_AB;Avg_speeadAB;Avg_pressure");
             //  fw.write("\n");
+            //για κάθε pattern πέρνουμε τα ζευγάρια του
             for (int j = 1; j < pat.get(i).length(); j++) {
 
                 A = Character.getNumericValue(pat.get(i).charAt(j - 1));
@@ -250,6 +255,12 @@ public class ReadWriteUtils {
 
 
         }
+
+    }
+
+    public static void deleteDir() throws IOException {
+        //για όταν χάνει και ξεκινάει από την αρχή
+        dir.delete();
 
     }
 
