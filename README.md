@@ -33,4 +33,4 @@ This project is an Android app that provides the necessary functionalities to me
     <li> Short Orthogonal edges </li> 
     <li>Number frequency </li>
 </ul>
-<h5>This app is provided  under the MIT Licence (as stated below). It is built for educational purposes only. If you choose to use it otherwise, the developers will not be held responsible. Please, do not use it with evil intent.<h5>
+<h5>This app is provided  under the MIT Licence. It is built for educational purposes only. If you choose to use it otherwise, the developers will not be held responsible. Please, do not use it with evil intent.<h5>
