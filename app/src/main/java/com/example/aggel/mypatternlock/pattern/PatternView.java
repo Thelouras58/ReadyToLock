@@ -31,7 +31,7 @@ import java.util.List;
 
 public class PatternView extends AppCompatActivity {
 
-    //δήλωση μεταβλητών
+    //variables declaration
     private PatternLockView patternLockView;
     private int turn = 0;
     private String final_pattern = "";
@@ -67,26 +67,27 @@ public class PatternView extends AppCompatActivity {
         temp.add(100);
         temp.add(100);
         cont = getApplicationContext();
-        //δημιουργούμε αντικείμενο της κλάσης μας που ''ακούνε΄΄ οι σένσορες
+        
+        
         s = new SensorsUtils(this);
-        //ξεκίνημα διαδικασίας
+        //begin the eavesdropping
         setListeners();
 
     }
 
     public void setListeners() {
-        //ο custom listener του patternLockView που χρησιμοποιήσαμε
-        //το capture ξεκινάει σε αυτά τα listeners και όχι στα ACTION_DOWN ACTION_UP
+        //custom listener of the custom view
         patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
-            public void onStarted() {
+            public void onStarted() {  //user start to draw a pattern
                 Log.e(getClass().getName(), "Pattern drawing started");
-                s.startListen();//ξεκινάμε τους σένσορες
+                s.startListen();//sensors start listening
             }
 
 
             @Override
             public void onProgress(List<PatternLockView.Dot> progressPattern) {
+                //user is on progress of drawing a pattern
                 Log.e(getClass().getName(), "Pattern progress: " +
                         PatternLockUtils.patternToString(patternLockView, progressPattern));
 
@@ -94,6 +95,7 @@ public class PatternView extends AppCompatActivity {
 
             @Override
             public void onComplete(List<PatternLockView.Dot> pattern) {
+                //user just finish the pattern
                 Log.e(getClass().getName(), "Pattern complete: " +
                         PatternLockUtils.patternToString(patternLockView, pattern));
 
@@ -101,7 +103,7 @@ public class PatternView extends AppCompatActivity {
 
 
                 try {
-                    //κλείνουμε τους σένσορες ,και ταυτόχρονα γράφονται τα αποτελέσματα τους στο raw (ΒΛ. την μέθοδο στο SensorUtils)
+                    //close the sensors to check and write the data in the raw files
                     s.stopListen(turn);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -115,14 +117,14 @@ public class PatternView extends AppCompatActivity {
             }
         });
 
-        //listener στο κουμπί που πατάει για να καταχωρίσει το pattern
+        //listener of the submit pattern button
         btnSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //έλεγχος άμα είναι σωστό το μήκος
+                //check if the pattern t length is >=4 and if is not empty
                 if (final_pattern != "" && final_pattern != null && final_pattern.length() >= 4) {
 
-                    //έλεγχος για διπλότιπο, ανάλογα σε πιο γύρο είμαστε , η  check ελέγχει για διπλό σε αυτήν την δεκάδα και η check2 για άμα έχει 2 ίδια με την προηγούμενη δεκάδα
+                    //check for duplicate patterns 
                     if ((check(final_pattern) && turn < 10) || (check(final_pattern) && turn > 12 && check2(final_pattern))) {
 
                         Toast.makeText(PatternView.this, "Pattern " + final_pattern + " saved" + "_turn: " + turn, Toast.LENGTH_SHORT).show();
@@ -130,15 +132,15 @@ public class PatternView extends AppCompatActivity {
 
                         listPatterns.add(final_pattern);
                         try {
-                            //αφού περάσαμε τους ελέγχους γράφουμε το raw αρχείο
+                            //all checks passed , so write the raw data file
                             ReadWriteUtils.writeCSV(listPoints, listPressures, listTimestamps, listPointsActivator, turn);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        //reinit για τον επόμενο γύρο
+                        //reinit for the next round
                         turn++;
                         clearList();
-                        //άμα είναι γύρο επιβεβαιωσης αλλάζουμε το κουμπί για να αλλάξει και η λειτουργία
+                        //change to check mode
                         if ((turn == 10) || (turn == 22)) {
                             btnSetup.setVisibility(View.INVISIBLE);
                             mButton.setVisibility(View.VISIBLE);
@@ -159,21 +161,21 @@ public class PatternView extends AppCompatActivity {
         patternLockView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View arg0, MotionEvent event) {
-                //πέρνουμε κάθε x,y
+                //get the point tha the finger touches
                 int x = (int) event.getX();
                 int y = (int) event.getY();
-                //υπολογίζουμε σε πιο κυκλο είναι πιο κοντά
+                //calculate the nearest button of the point
                 PatternUtils.calculatePoint(x, y);
-                //πέρνουμε και την πίεση
+                //get the pressure of the finger
                 float pressure = event.getPressure();
                 //το timestamp
                 String timest = String.valueOf(SystemClock.elapsedRealtimeNanos());
-                //τα αποθηκεύουμε σε λίστες για να τα γράψουμε στο τέλος της διαδικασίας
+                //save the previous data in lists
                 listPoints.add(x + ";" + y);
                 listPressures.add(String.valueOf(pressure));
                 listTimestamps.add(timest);
                 listPointsActivator.add(PatternUtils.calculatePoint(x, y));
-                Log.e("LISTESYO", listPoints.size() + "_" + listPressures.size() + "_" + listTimestamps.size() + "_" + listPointsActivator.size());
+             
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
@@ -186,9 +188,9 @@ public class PatternView extends AppCompatActivity {
 
     }
 
-    //ελεγχος άμα  βάλει ίδιο pattern στην 10αδα
+    //check if there is a duplicate pattern 
     public Boolean check(String pat) {
-        if (turn < 13) {//για την πρώτη 10αδα
+        if (turn < 13) {//ifor the first round
 
             for (int i = 0; i < listPatterns.size(); i++) {
 
@@ -201,7 +203,7 @@ public class PatternView extends AppCompatActivity {
             }
 
 
-        } else {//για την δεύτερη 10αδα
+        } else {//for the second
             for (int i = 13; i < listPatterns.size(); i++) {
                 if (pat.equals(listPatterns.get(i))) {
                     return false;
@@ -211,7 +213,7 @@ public class PatternView extends AppCompatActivity {
         return true;
     }
 
-    //έλεγχος άμα βάλει στην δεύτερη 10αδα πάνω απ'ό δυο pattern ίδια με την προγούμενη
+    //check for duplicated between the two rounds
     public Boolean check2(String pat) {
 
         for (int i = 0; i < 10; i++) {
@@ -227,7 +229,7 @@ public class PatternView extends AppCompatActivity {
         return true;
     }
 
-    //έλεγχος για όταν βάζει τα 3 pattern που πρέπει να θυμάται
+    //check the pattern in the check mode
     public Boolean check3(String pat) {
         if (turn < 13) {
 
@@ -273,7 +275,7 @@ public class PatternView extends AppCompatActivity {
         return true;
     }
 
-    //η onClick του κουμπιού όταν βάζει τα τρία pattern επιβαιβέωσης
+    //onClick method for the button in check mode
     public void box3(View view) throws IOException {
 
         if (!check3(final_pattern)) {
@@ -289,7 +291,7 @@ public class PatternView extends AppCompatActivity {
             clearList();
             turn++;
 
-            //άμα τελείωσε πάμε για την δευτερη  10αδα
+            //change mode
             if (turn == 13) {
                 btnSetup.setVisibility(View.VISIBLE);
                 mButton.setVisibility(View.INVISIBLE);
@@ -298,7 +300,10 @@ public class PatternView extends AppCompatActivity {
                 clearList();
 
                 counter = 0;
-            } else if (turn == 25) {// αμα τελειώσε τελείος πάμε να υπολογίζουμε τα στατιστικά και τα metadata
+            } else if (turn == 25) {
+                // end of the procedure
+                //change activity
+                //send the pattern
                 Intent c = new Intent(this, StatisticsActivity.class);
                 c.putStringArrayListExtra("patternsList", this.listPatterns);
                 startActivity(c);
