@@ -14,26 +14,26 @@ import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 
-//κλάση που έχουμε τις λειτουργίες με τους σένσορες
+//class with the methods for sensors
 public class SensorsUtils implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor sensor1, sensor2, sensor3;
-    private ArrayList<String> sen1, sen2,sen0, time1;
+    private ArrayList<String> sen1, sen2, sen0, time1;
 
     public SensorsUtils() {
     }
 
 
     public SensorsUtils(Activity activity) {
-    //init
+    //inits
         mSensorManager = (SensorManager) activity.getSystemService(Activity.SENSOR_SERVICE);
         sensor1 = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);//to kinito den exei gyroscope  xrisimopoioume to rotation vector kai metatrepoume ta apotelesmata tou se azimuth ,roll,pitch
+        sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         sensor3 = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
-        sen1 = new ArrayList();
-        sen2 = new ArrayList();
-        sen0 = new ArrayList();
-        sen0 = new ArrayList();
+        sen1 = new ArrayList<>();
+        sen2 = new ArrayList<>();
+        sen0 = new ArrayList<>();
+        sen0 = new ArrayList<>();
         time1 = new ArrayList<>();
 
     }
@@ -48,7 +48,7 @@ public class SensorsUtils implements SensorEventListener {
 
     public void stopListen(int turn) throws IOException {
         mSensorManager.unregisterListener(this);
-        //με το που σταματάμε σημαίνει ότι τελείωσε ο γύρος άρα τα γράφουμε στο csv
+        //when we dont need thes sensors anymore ,  write tha data tha captured in the csv sensors data file
         ReadWriteUtils.writeCSV(turn, sen1,sen0, sen2, time1);
 
 
@@ -57,7 +57,9 @@ public class SensorsUtils implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        //take the timestamp of the record
         time1.add(String.valueOf(SystemClock.elapsedRealtimeNanos()));
+        //dependly wich sensor trigger the event take the values 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             updateOrientation(sensorEvent.values);
 
@@ -79,7 +81,7 @@ public class SensorsUtils implements SensorEventListener {
 
     }
 
-    //metatropi ton apotelesmatwn tou rotation vector se azimuth/pitch/roll opws tha epestrefe to gyroscope
+    //rotation matrix values to pitch,roll and azimuth 
     public void updateOrientation(float[] rotationVector) {
         float[] rotationMatrix = new float[9];
         SensorManager.getRotationMatrixFromVector(rotationMatrix, rotationVector);
@@ -100,8 +102,9 @@ public class SensorsUtils implements SensorEventListener {
         float azimuth = orientation[0] * -57;
         float pitch = orientation[1] * -57;
         float roll = orientation[2] * -57;
-       // Log.e("ORIENT",azimuth+"_"+pitch+"_"+roll);
+      
             sen0.add(azimuth+";"+pitch+";"+roll);
 
     }
 }
+    
