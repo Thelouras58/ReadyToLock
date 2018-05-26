@@ -2,7 +2,7 @@
 <mark>Mobile and Wireless Communication Networks Security<br/>
     Lab Assignment 2018, Spring Semester</mark>
 <br/><br/>
-Entering a gesture-based unlock pattern is still the basic means of first-step user authentication in Android devices. Significant research has been conducted on how to break or circumvent the unlocking mechanism of such devices (see selected reading material). Some of the solutions that achieve good results rely on the use of monitoring mechanisms, e.g. installed software or external cameras. In this assignment, we aim to extract several behavioral characteristics from the users’ interaction with the smartphone screen. Additionally, we will attempt to extract meaningful statistics from the users’ patters and examine how “close” in terms of similarity the behavior of the users is.
+Entering a gesture-based unlock pattern is still the basic means of first-step user authentication in Android devices. Significant research has been conducted on how to break or circumvent the unlocking mechanism of such devices. Some of the solutions that achieve good results rely on the use of monitoring mechanisms, e.g. installed software or external cameras. In this assignment, we aim to extract several behavioral characteristics from the users’ interaction with the smartphone screen. Additionally, we will attempt to extract meaningful statistics from the users’ patters and examine how “close” in terms of similarity the behavior of the users is.
 
 This project is an Android app that provides the necessary functionalities to meet its purpose, like:
 <ul>
