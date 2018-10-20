@@ -1,18 +1,16 @@
 package com.example.aggel.mypatternlock;
 
-import android.util.Log;
 
 import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 
 import java.io.IOException;
-//κλάση που αναπαραστά τον χρήστη
 public class User {
     private String username;
 
     private int hand, finger;
 
 
-    public User(String username, int hand, int finger) throws IOException {
+    protected User(String username, int hand, int finger) throws IOException {
         this.username = username;
         this.finger = finger;
         this.hand = hand;

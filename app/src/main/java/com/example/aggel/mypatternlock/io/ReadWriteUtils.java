@@ -1,14 +1,9 @@
 package com.example.aggel.mypatternlock.io;
 
-import android.content.Context;
-import android.os.Environment;
-import android.util.AtomicFile;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.WindowManager;
 
-import com.andrognito.patternlockview.utils.PatternLockUtils;
+import android.os.Environment;
+import android.util.Log;
+
 import com.example.aggel.mypatternlock.MainActivity;
 import com.example.aggel.mypatternlock.pattern.PatternUtils;
 import com.example.aggel.mypatternlock.pattern.PatternView;
@@ -16,34 +11,28 @@ import com.example.aggel.mypatternlock.pattern.Point;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 /**
- * Class tha contains 
- * the utils to write all the files 
+ * Class tha contains
+ * the utils to write all the files
  * raw and metadata
  */
 public class ReadWriteUtils {
 
-    private static File dir, file;
+    private static File dir;
     private static Float maxPresOver, minPresOver;
     private static ArrayList<Float> avgSpeedOver;
-        /**
-         * create user's personal dir
-         */
+
+    /**
+     * create user's personal dir
+     */
     public static void makeDir(String username) throws IOException {
-         
+
         dir = new File(Environment.getExternalStorageDirectory() + "/users/" + username);
         dir.mkdirs();
 
@@ -58,7 +47,7 @@ public class ReadWriteUtils {
         // fw.write("number_of_activated_point;xpoint;ypoint;timestamp;pressure");
         // fw.write("\n");
         for (int i = 0; i < data.size(); i++) {
- 
+
             fw.write(data4.get(i).toString());
             fw.write(";");
             fw.write(data3.get(i));
@@ -128,7 +117,7 @@ public class ReadWriteUtils {
                 line = br.readLine();
             }
 
-          
+
             Float timeToComplete = times.get(times.size() - 1) - times.get(0);
             Float length = PatternUtils.calculatePatternLength(points);
             Float avgPres = PatternUtils.avg(pressures);
@@ -137,7 +126,7 @@ public class ReadWriteUtils {
             Float minPres = Collections.min(pressures);
 
             if (PatternUtils.max(maxPres, maxPresOver)) {
-               // Log.e("MAXMAX", maxPresOver + "");
+                // Log.e("MAXMAX", maxPresOver + "");
                 maxPresOver = maxPres;
             }
             if (PatternUtils.min(minPres, minPresOver)) {
@@ -193,7 +182,8 @@ public class ReadWriteUtils {
             final String filename = dir.toString() + "/" + MainActivity.getUser().getUsername() + i + "_pairs.csv";
             FileWriter fw = new FileWriter(filename, true);
             File raw;
-            Integer A = 0, B = 0;
+            Integer A = 0;
+            Integer B = 0;
             Point central1, central2;
             ArrayList<Point> activatorsOfA = new ArrayList<>();
             ArrayList<Point> activatorsOfB = new ArrayList<>();
@@ -207,7 +197,7 @@ public class ReadWriteUtils {
             Log.e("METADATA", pat.get(i).charAt(0) + "");
             // fw.write("Username;Attempt_number;Screen_Resolution;Pattern_number_A; Pattern_number_B; Xcoord_of_central_Point_of_A; Ycoord_of_central_Point_of_A;Xcoord_of_central_Point_of_B;Ycoord_of_central_Point_of_B;First_Xcoord_of_A; First_Ycoord_of_A;Last_ Xcoord_of_B;Last_Ycoord_of_B;Distance_AB;Intertime_AB;Avg_speeadAB;Avg_pressure");
             //  fw.write("\n");
-            
+
             //for every pattern take the pairs
             for (int j = 1; j < pat.get(i).length(); j++) {
 

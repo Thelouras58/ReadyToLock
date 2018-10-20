@@ -6,8 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.SystemClock;
-import android.provider.Settings;
-import android.util.Log;
 
 import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 
@@ -25,7 +23,7 @@ public class SensorsUtils implements SensorEventListener {
 
 
     public SensorsUtils(Activity activity) {
-    //inits
+        //inits
         mSensorManager = (SensorManager) activity.getSystemService(Activity.SENSOR_SERVICE);
         sensor1 = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensor2 = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
@@ -49,7 +47,7 @@ public class SensorsUtils implements SensorEventListener {
     public void stopListen(int turn) throws IOException {
         mSensorManager.unregisterListener(this);
         //when we dont need thes sensors anymore ,  write tha data tha captured in the csv sensors data file
-        ReadWriteUtils.writeCSV(turn, sen1,sen0, sen2, time1);
+        ReadWriteUtils.writeCSV(turn, sen1, sen0, sen2, time1);
 
 
     }
@@ -102,8 +100,8 @@ public class SensorsUtils implements SensorEventListener {
         float azimuth = orientation[0] * -57;
         float pitch = orientation[1] * -57;
         float roll = orientation[2] * -57;
-      
-            sen0.add(azimuth+";"+pitch+";"+roll);
+
+        sen0.add(azimuth + ";" + pitch + ";" + roll);
 
     }
 }

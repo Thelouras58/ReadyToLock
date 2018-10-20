@@ -1,7 +1,8 @@
 package com.example.aggel.mypatternlock.pattern;
 
 public class Point {
-    int x, y;
+    private int x;
+    private int y;
 
     public int getX() {
         return x;

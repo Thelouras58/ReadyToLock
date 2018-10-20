@@ -1,26 +1,23 @@
 package com.example.aggel.mypatternlock.statistics;
 
-import android.content.Intent;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aggel.mypatternlock.R;
 import com.example.aggel.mypatternlock.io.ReadWriteUtils;
-import com.example.aggel.mypatternlock.pattern.PatternUtils;
-import com.example.aggel.mypatternlock.pattern.PatternView;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class StatisticsActivity extends AppCompatActivity {
-    ArrayList<String> patterns;
-    int longRuns, closedCurves, longCurves, longEdges, shortEdges, longOrthEdges, shortOrthEdges;
-    TextView results;
+    private ArrayList<String> patterns;
+    private int longRuns, closedCurves, longCurves, longEdges, shortEdges, longOrthEdges, shortOrthEdges;
+    private TextView results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +30,7 @@ public class StatisticsActivity extends AppCompatActivity {
     public void createMetadata(View view) throws IOException {
         ReadWriteUtils.writeMetaData(patterns);
         ReadWriteUtils.writeMetaData2(patterns);
-        Toast.makeText(this, "DONE",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "DONE", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -55,7 +52,7 @@ public class StatisticsActivity extends AppCompatActivity {
     public void show(View view) {
         results.setText("LongRuns: " + longRuns + "\nClosedCurves: " + closedCurves + "\nLongCurves: " + longCurves + "\nLongEdes: " + longEdges + "\nShortEdges: " + shortEdges + "\nLongOrthEdges: " + longOrthEdges + "\nShortOrthEdges: " + shortOrthEdges + "\n----------------------------------------\n");
 
-       // results.append("MaxPressure: " + ReadWriteUtils.getMaxPresOver() + "\nMinPressure: " + ReadWriteUtils.getMinPresOver() + "\nAverage Speed: " + PatternUtils.avg(ReadWriteUtils.getAvgSpeedOver())+" nanoseconds");
+        // results.append("MaxPressure: " + ReadWriteUtils.getMaxPresOver() + "\nMinPressure: " + ReadWriteUtils.getMinPresOver() + "\nAverage Speed: " + PatternUtils.avg(ReadWriteUtils.getAvgSpeedOver())+" nanoseconds");
         results.setVisibility(View.VISIBLE);
     }
 
@@ -68,7 +65,7 @@ public class StatisticsActivity extends AppCompatActivity {
         this.shortEdges = 0;
         this.longOrthEdges = 0;
         this.shortOrthEdges = 0;
-        results = (TextView) findViewById(R.id.textView);
+        results =  findViewById(R.id.textView);
         results.setVisibility(View.INVISIBLE);
     }
 }

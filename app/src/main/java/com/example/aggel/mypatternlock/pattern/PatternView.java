@@ -35,7 +35,6 @@ public class PatternView extends AppCompatActivity {
     private PatternLockView patternLockView;
     private int turn = 0;
     private String final_pattern = "";
-    private String save_pattern_key = "pattern_code";
     private ArrayList<String> listPoints = new ArrayList<>();
     private ArrayList<Integer> listPointsActivator = new ArrayList<>();
     private ArrayList<String> listTimestamps = new ArrayList<>();
@@ -67,8 +66,8 @@ public class PatternView extends AppCompatActivity {
         temp.add(100);
         temp.add(100);
         cont = getApplicationContext();
-        
-        
+
+
         s = new SensorsUtils(this);
         //begin the eavesdropping
         setListeners();
@@ -122,7 +121,7 @@ public class PatternView extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //check if the pattern t length is >=4 and if is not empty
-                if (final_pattern != "" && final_pattern != null && final_pattern.length() >= 4) {
+                if (!final_pattern.equals("") && final_pattern != null && final_pattern.length() >= 4) {
 
                     //check for duplicate patterns 
                     if ((check(final_pattern) && turn < 10) || (check(final_pattern) && turn > 12 && check2(final_pattern))) {
@@ -175,7 +174,7 @@ public class PatternView extends AppCompatActivity {
                 listPressures.add(String.valueOf(pressure));
                 listTimestamps.add(timest);
                 listPointsActivator.add(PatternUtils.calculatePoint(x, y));
-             
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
@@ -198,7 +197,7 @@ public class PatternView extends AppCompatActivity {
 
                     return false;
                 }
-                return true;
+                break;
 
             }
 

@@ -7,11 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.aggel.mypatternlock.io.ReadWriteUtils;
 import com.example.aggel.mypatternlock.pattern.PatternView;
-import com.example.aggel.mypatternlock.statistics.StatisticsActivity;
-
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,16 +20,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textBox = (EditText) findViewById(R.id.textBox);
-        textBox2 = (EditText) findViewById(R.id.textBox2);
-        textBox3 = (EditText) findViewById(R.id.textBox3);
+        textBox =  findViewById(R.id.textBox);
+        textBox2 = findViewById(R.id.textBox2);
+        textBox3 =  findViewById(R.id.textBox3);
 
     }
 
     //onClick του κουμπιου
     public void startApp(View view) throws IOException {
         Intent c = new Intent(this, PatternView.class);
-        Intent c2 = new Intent(this, MainActivity.class);
 
         if (this.textBox.getText().toString().equals("username") || this.textBox3.getText().toString().equals("finger") || this.textBox2.getText().toString().equals("hand")) {
 
